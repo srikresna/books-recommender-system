@@ -1,9 +1,9 @@
 # Laporan Proyek Machine Learning - Sri Kresna Maha Dewa
 ## Project Overview
 
-Membaca buku tetap menjadi salah satu cara paling efektif bagi individu untuk memperluas pengetahuan dan wawasan mereka terhadap berbagai topik[2]. Meskipun kita hidup dalam era di mana informasi mudah diakses melalui internet, minat baca di Indonesia masih rendah, mungkin karena banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka[4].
+Membaca buku tetap menjadi salah satu cara paling efektif bagi individu untuk memperluas pengetahuan dan wawasan mereka terhadap berbagai topik[1]. Meskipun kita hidup dalam era di mana informasi mudah diakses melalui internet, minat baca di Indonesia masih rendah, mungkin karena banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka[2].
 
-Dalam upaya meningkatkan minat baca masyarakat, proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku yang lebih canggih. Metode utama yang akan digunakan adalah _Collaborative Filtering_, sebuah pendekatan yang mengintegrasikan sumber daya dan penelitian terkini dalam pengembangan sistem rekomendasi[2].
+Dalam upaya meningkatkan minat baca masyarakat, proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku yang lebih canggih. Metode utama yang akan digunakan adalah _Collaborative Filtering_, sebuah pendekatan yang mengintegrasikan sumber daya dan penelitian terkini dalam pengembangan sistem rekomendasi[1].
 
 Melalui pendekatan ini, diharapkan pembaca dapat dengan mudah menemukan buku yang sesuai dengan kriteria dan preferensi mereka. Sistem akan menggunakan data kolaboratif dari sejumlah besar pembaca untuk merekomendasikan buku yang mungkin belum dikenal tetapi sesuai dengan selera mereka.
 
@@ -37,7 +37,7 @@ Dampak Positif: Pembaca yang menerima rekomendasi yang tepat cenderung lebih ter
 1. Memberikan sejumlah rekomendasi buku yang belum dibaca atau mungkin akan disukai oleh pembaca dengan menggunakan _collaborative filtering_.
    - Memberikan setidaknya 10 rekomendasi buku yang belum dibaca atau yang mungkin disukai oleh pembaca
 2. Membuat sebuah model yang memiliki kehandalan yang cukup agar rekomendasi bisa lebih akurat
-   - Tingkat akurasi prediksi berdasarkan evaluasi RMSE mendekati angka nol untuk kategori baik.
+   - Tingkat akurasi prediksi berdasarkan evaluasi RMSE berada di <0.5 atau lebih rendah akan menjadi model yang baik.
    - Memastikan model dapat menangani variasi dalam preferensi pembaca dengan konsisten.
 
 ### Solution statements
@@ -91,6 +91,7 @@ Bagaimana pendapat pembaca atau rating yang diberikan kepada buku-buku yang ada 
 > Gambar 1. Distribusi rating
 
 Setiap individu memiliki kecenderungan berbeda dalam memberikan rating pada buku. Beberapa memberikan rating tinggi secara umum, bahkan untuk buku yang biasa-biasa saja, sementara yang lain lebih kritis dan memberikan rating maksimum hanya untuk buku yang dianggap sempurna. Pada grafik rata-rata rating, terlihat bahwa ada lonjakan pengguna dengan rata-rata rating 5, menandakan bahwa mereka cenderung memberikan rating tinggi pada semua buku yang mereka baca.
+
 ![alt text](img/meanRating.png)
 > Gambar 2. Rata-rata distribusi rating
 
@@ -98,17 +99,25 @@ Buku apa yang memiliki rating yang cukup bagus dalam dataset?
 ![alt text](img/newplot.png)
 > Gambar 3. Buku dengan rata-rata rating terbaik
 
+Melalui grafik diatas, The Complete Calvin and Hobbes menduduki peringkat pertama dengan rata-rata rating tertinggi, kemudian disusul oleh Words of Radiance dan Mark of the Lion Trilogy.
+
 Bagaimana dengan buku yang memiliki rating terbanyak?
 ![alt text](img/newplot%20(1).png)
 > Gambar 4. Buku dengan jumlah rating terbanyak
+
+Grafik buku rating terbanyak diatas, terlihat The Hunger Games menjadi buku dengan pemberian rating terbanyak, ini membuat spekulasi bahwa buku ini adalah buku yang paling sering dibaca oleh pembaca. Pada peringkat kedua ada Harry Potter and the Philosopher's Stone diikuti dengan To Kill a Mockingbird yang berada di peringkat ketiga. 
 
 Dari semua buku, kapan buku-buku tersebut diterbitkan?
 ![alt text](img/newplot%20(3).png)
 > Gambar 5. Jumlah buku berdasarkan tahun publikasi
 
+Pada dataset yang digunakan, melalui grafik diatas, persentase terbesar tahun publikasi buku adalah pada tahun 2002. Publikasi tahun 2003 pada peringkat kedua, dan tahun 2000 pada peringkat ketiga dengan publikasi terbanyak. Tahun publikasi terbaru yang ada pada grafik diatas adalah tahun 2004 yang berada di urutan ke-8. Grafik diatas menjelaskan bahwa tren penulisan atau pembuatan buku semakin meningkat dari tahun ke tahun, dan puncaknya berada di tahun 2002. 
+
 Dari banyaknya buku yang ada, siapa penulis dengan jumlah buku paling banyak?
 ![alt text](img/newplot%20(4).png)
 > Gambar 6. Data author beserta jumlah publikasinya
+
+Menurut grafik data author dan jumlah publikasinya, Nora Robers merupakan author dengan jumlah publikasi yang terbanyak mungkin sangat banyak yaitu lebih 5000 buku secara data, tidak dijelaskan terkait jumlah karya orisinil atau jumlah cetaknya. Pada peringkat kedua ada Rich Shapero dengan publikasi tercatat hampir 3000 buku, lalu di peringkat ketiga R. L. Stine yang jumlah publikasinya tidak jauh beda yaitu mendekati 3000 buku. 
 
 **Penggunaan Atribut untuk Pemodelan:**
 File yang dapat digunakan untuk pemodelan adalah file 'books.csv' dan 'ratings.csv' dengan menggunakan variabel **'user_id', 'book_id', 'authors', 'original_title'** dengan model _collaborative filtering_. 
@@ -212,8 +221,9 @@ Potensial untuk Peningkatan:
 - Sebelum menarik kesimpulan final, perlu juga mempertimbangkan relevansi nilai RMSE dengan konteks aplikasi dan kebutuhan pengguna. Sebuah nilai RMSE yang rendah mungkin tidak selalu menjamin kepuasan pengguna, sehingga pemahaman mendalam terhadap kebutuhan pengguna sangat penting dalam mengevaluasi kualitas rekomendasi.
 
 ## Referensi
-1. Alkaff, M., Khatimi, H., & Eriadi, A. (2020). Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering. MATRIK: Jurnal Manajemen, Teknik Informatika Dan Rekayasa Komputer, 20(1), 193-202.
-2. Irfan, M., & Cahyani, A. D. (2014). Sistem Rekomendasi: Buku Online Dengan Metode Collaborative Filtering. Jurnal Teknologi Technoscientia, 076-84.
-3. ZAYYAD, M. R. A. (2021). Sistem Rekomendasi Buku Menggunakan Metode Content Based Filtering.
-4. Arfisko, H. H., & Wibowo, A. T. (2022). Sistem Rekomendasi Film Menggunakan Metode Hybrid Collaborative Filtering Dan Content-Based Filtering. eProceedings of Engineering, 9(3).
+1. Irfan, M., & Cahyani, A. D. (2014). Sistem Rekomendasi: Buku Online Dengan Metode Collaborative Filtering. Jurnal Teknologi Technoscientia, 076-84.
+2. Arfisko, H. H., & Wibowo, A. T. (2022). Sistem Rekomendasi Film Menggunakan Metode Hybrid Collaborative Filtering Dan Content-Based Filtering. eProceedings of Engineering, 9(3).
+3. Alkaff, M., Khatimi, H., & Eriadi, A. (2020). Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering. MATRIK: Jurnal Manajemen, Teknik Informatika Dan Rekayasa Komputer, 20(1), 193-202.
+4. ZAYYAD, M. R. A. (2021). Sistem Rekomendasi Buku Menggunakan Metode Content Based Filtering.
+
 
