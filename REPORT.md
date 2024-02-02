@@ -86,6 +86,7 @@ Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-
 
 **Exploratory Data Analysis (EDA)**:
 Bagaimana pendapat pembaca atau rating yang diberikan kepada buku-buku yang ada di dataset? Berikut adalah grafiknya
+
 ![alt text](img/rating.png)
 > Gambar 1. Distribusi rating
 
