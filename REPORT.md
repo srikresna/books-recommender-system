@@ -1,13 +1,15 @@
 # Laporan Proyek Machine Learning - Sri Kresna Maha Dewa
 ## Project Overview
 
-Membaca buku tetap menjadi salah satu cara paling efektif bagi individu untuk memperluas pengetahuan dan wawasan mereka terhadap berbagai topik. Meskipun kita hidup dalam era di mana informasi mudah diakses melalui internet, minat baca di Indonesia masih rendah, mungkin karena banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka.
+Membaca buku tetap menjadi salah satu cara paling efektif bagi individu untuk memperluas pengetahuan dan wawasan mereka terhadap berbagai topik[2]. Meskipun kita hidup dalam era di mana informasi mudah diakses melalui internet, minat baca di Indonesia masih rendah, mungkin karena banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka[4].
 
-Dalam upaya meningkatkan minat baca masyarakat, proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku yang lebih canggih. Metode utama yang akan digunakan adalah _Collaborative Filtering_, sebuah pendekatan yang mengintegrasikan sumber daya dan penelitian terkini dalam pengembangan sistem rekomendasi.
+Dalam upaya meningkatkan minat baca masyarakat, proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku yang lebih canggih. Metode utama yang akan digunakan adalah _Collaborative Filtering_, sebuah pendekatan yang mengintegrasikan sumber daya dan penelitian terkini dalam pengembangan sistem rekomendasi[2].
 
 Melalui pendekatan ini, diharapkan pembaca dapat dengan mudah menemukan buku yang sesuai dengan kriteria dan preferensi mereka. Sistem akan menggunakan data kolaboratif dari sejumlah besar pembaca untuk merekomendasikan buku yang mungkin belum dikenal tetapi sesuai dengan selera mereka.
 
-Dengan meningkatnya akurasi rekomendasi, diharapkan bahwa masyarakat akan lebih tertarik untuk menjelajahi berbagai jenis buku dan dengan demikian, minat baca secara keseluruhan dapat ditingkatkan. Dengan mengintegrasikan sumber daya dan penelitian terkini, proyek ini tidak hanya bertujuan memenuhi kebutuhan pembaca saat ini tetapi juga berupaya membuka jendela baru ke dunia literasi yang lebih luas.
+Melalui proyek ini, diharapkan masyarakat akan lebih tertarik untuk menjelajahi berbagai jenis buku, mendorong minat baca secara keseluruhan. Dengan menghadirkan rekomendasi buku yang personal dan akurat, proyek ini bertujuan tidak hanya memenuhi kebutuhan pembaca saat ini tetapi juga membuka jendela baru ke dunia literasi yang lebih luas.
+
+Pendekatan ini diperkuat melalui integrasi sumber daya dan temuan penelitian terkini. Studi-studi terbaru dalam dunia literasi dan tren bacaan dapat menjadi landasan bagi proyek ini. Penelitian-penelitian tersebut dapat mencakup pemahaman terkini tentang preferensi pembaca, perkembangan tren literasi, dan dampak teknologi terhadap kebiasaan membaca. Dengan mengintegrasikan sumber daya ini, diharapkan proyek ini dapat menghasilkan rekomendasi yang tidak hanya relevan secara personal tetapi juga mengikuti perkembangan dan kebutuhan literasi masyarakat modern.
 
 ## Business Understanding
 
@@ -32,8 +34,11 @@ Dampak Positif: Pembaca yang menerima rekomendasi yang tepat cenderung lebih ter
 
 ### Goals
 
-- Memberikan sejumlah rekomendasi buku yang belum dibaca atau mungkin akan disukai oleh pembaca dengan menggunakan _collaborative filtering_.
-- Membuat sebuah model yang memiliki kehandalan yang cukup agar rekomendasi bisa lebih akurat
+1. Memberikan sejumlah rekomendasi buku yang belum dibaca atau mungkin akan disukai oleh pembaca dengan menggunakan _collaborative filtering_.
+   - Memberikan setidaknya 10 rekomendasi buku yang belum dibaca atau yang mungkin disukai oleh pembaca
+2. Membuat sebuah model yang memiliki kehandalan yang cukup agar rekomendasi bisa lebih akurat
+   - Tingkat akurasi prediksi berdasarkan evaluasi RMSE mendekati angka nol untuk kategori baik.
+   - Memastikan model dapat menangani variasi dalam preferensi pembaca dengan konsisten.
 
 ### Solution statements
 - Implementasi _Collaborative Filtering_: Penerapan metode _collaborative filtering_ akan dilakukan melalui penggunaan kelas `RecommenderNet`. Ini bertujuan membentuk model yang handal dan _robust_, memungkinkan sistem memahami preferensi pembaca dengan lebih baik melalui informasi dari pengguna lain.
@@ -43,7 +48,7 @@ Dampak Positif: Pembaca yang menerima rekomendasi yang tepat cenderung lebih ter
 - Fokus pada Kualitas dan Akurasi: Selain pembangunan model yang powerful, penelitian ini menempatkan penekanan pada evaluasi kritis dengan menggunakan RMSE. Hal ini bertujuan untuk memastikan bahwa sistem rekomendasi buku tidak hanya mampu memberikan rekomendasi personal, tetapi juga secara konsisten akurat dan dapat diandalkan dalam memenuhi preferensi pembaca.
 
 ## Data Understanding
-Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-10k"_](https://www.kaggle.com/datasets/zygmunt/goodbooks-10k?select=books.csv). Dataset ini berisi 5 file dengan ekstensi csv, yaitu:
+Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-10k"_](https://www.kaggle.com/datasets/zygmunt/goodbooks-10k?select=books.csv). Goodsreads adalah situs pembaca dan rekomendasi buku terbesar di dunia. Dataset ini berisi 5 file dengan ekstensi csv, yaitu:
 1. **'book_tags.csv'**, file ini berisi data tag buku (label), diurutkan berdasarkan ascending goodreadsbookid dan count descending.
    - goodreads_id : ID dari goodreads
    - tag_id : ID tag (genre)
@@ -60,6 +65,10 @@ Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-
    - original_publication_year : tahun terbit buku
    - original_title : judul asli buku
    
+   Perbedaan antara ID Buku dan ID Buku Populer (Best Book ID):
+   - book_id: Merupakan ID unik untuk setiap buku dalam dataset.
+   - best_book_id: Merupakan ID buku yang dianggap sebagai buku populer atau buku terbaik. Ini mencerminkan edisi atau versi tertentu dari buku yang lebih banyak digunakan atau diakui oleh pengguna.
+
 4. **'ratings.csv'**, berisi rating buku sesuai id pengguna.
    - book_id : ID buku
    - user_id : ID Pengguna
@@ -74,51 +83,45 @@ Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-
    - book_id : ID buku
    
     Dari data didapatkan Jumlah User = 48871.
-      
-File yang digunakan untuk pemodelan adalah file 'books.csv' dan 'ratings.csv' dengan menggunakan variabel **'user_id', 'book_id', 'authors', 'original_title'** dengan model _collaborative filtering_.
+
+**Exploratory Data Analysis (EDA)**:
+Bagaimana pendapat pembaca atau rating yang diberikan kepada buku-buku yang ada di dataset? Berikut adalah grafiknya
+![alt text](img/rating.png)
+> Gambar 1. Distribusi rating
+
+Setiap individu memiliki kecenderungan berbeda dalam memberikan rating pada buku. Beberapa memberikan rating tinggi secara umum, bahkan untuk buku yang biasa-biasa saja, sementara yang lain lebih kritis dan memberikan rating maksimum hanya untuk buku yang dianggap sempurna. Pada grafik rata-rata rating, terlihat bahwa ada lonjakan pengguna dengan rata-rata rating 5, menandakan bahwa mereka cenderung memberikan rating tinggi pada semua buku yang mereka baca.
+![alt text](img/meanRating.png)
+> Gambar 2. Rata-rata distribusi rating
+
+Buku apa yang memiliki rating yang cukup bagus dalam dataset?
+![alt text](img/newplot.png)
+> Gambar 3. Buku dengan rata-rata rating terbaik
+
+Bagaimana dengan buku yang memiliki rating terbanyak?
+![alt text](img/newplot%20(1).png)
+> Gambar 4. Buku dengan jumlah rating terbanyak
+
+Dari semua buku, kapan buku-buku tersebut diterbitkan?
+![alt text](img/newplot%20(3).png)
+> Gambar 5. Jumlah buku berdasarkan tahun publikasi
+
+Dari banyaknya buku yang ada, siapa penulis dengan jumlah buku paling banyak?
+![alt text](img/newplot%20(4).png)
+> Gambar 6. Data author beserta jumlah publikasinya
 
 **Penggunaan Atribut untuk Pemodelan:**
+File yang dapat digunakan untuk pemodelan adalah file 'books.csv' dan 'ratings.csv' dengan menggunakan variabel **'user_id', 'book_id', 'authors', 'original_title'** dengan model _collaborative filtering_. 
 - user_id dan book_id: Untuk mengidentifikasi hubungan antara pengguna dan buku.
 - authors dan original_title: Informasi tentang buku yang akan digunakan dalam pembuatan rekomendasi.
 
 ## Data Preparation
 Teknik yang digunakan untuk data preparation antara lain sebagai berikut:
-1. **Mengatasi Missing Value**, Data yang hilang dapat menyebabkan ketidakakuratan dan ketidakseimbangan dalam model. Oleh karena itu, penting untuk menangani nilai yang hilang agar model dapat memberikan hasil yang dapat diandalkan. Ini dilakukan dengan pengecekan data apakah ada data yang kosong dan berapa jumlahnya menggunakan `isnull().sum()`, sehingga didapatkan hasil:
-   ```sh
-     book_id                             0
-     user_id                             0
-     rating                              0
-     authors                      88860317
-     title                        88860317
-     original_publication_year    88870317
-     dtype: int64
-   ```
-   Kemudian dihapus menggunakan `.dropna()`
-   ```sh
-      df.dropna()
-   ```
-2. **Encoding Data**, melakukan penyandian (_encoding_) fitur **'user_id'** dan **book_id** ke bentuk indeks integer agar dapat diinterpretasikan oleh algoritma machine learning.
-   ```sh
-      id_user = dr['user_id'].unique().tolist()
-      user_to_user_encoded = {x: i for i, x in enumerate(id_user)}
-      user_encoded_to_user = {i: x for i, x in enumerate(id_user)}
-      id_buku = dr['book_id'].unique().tolist()
-      buku_to_buku_encoded = {x: i for i, x in enumerate(id_buku)}
-      buku_encoded_to_buku = {i: x for i, x in enumerate(id_buku)}
-   ```
-3. **Membagi Dataset**, dataset akan dibagi menjadi data train dan data test dengan rasio 80:20. Namun sebelum itu dilakukan pengacakan dataset agar distribusinya random/acak. Teknik _Encoding_ Data dan Membagi Dataset dilakukan untuk nantinya dipakai pada model _collaborative filtering_. Rasio 80:20 umumnya digunakan untuk memberikan data yang cukup untuk melatih model dan sekaligus menguji kinerjanya.
-   ```sh
-      x = dr[['user_id', 'book_id']].values
-      y = dr['rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
+1. **Mengatasi Missing Value**, Data yang hilang dapat menyebabkan ketidakakuratan dan ketidakseimbangan dalam model. Oleh karena itu, penting untuk menangani nilai yang hilang agar model dapat memberikan hasil yang dapat diandalkan.
 
-      train_indices = int(0.8 * dr.shape[0])
-      x_train, x_val, y_train, y_val = (
-         x[:train_indices],
-         x[train_indices:],
-         y[:train_indices],
-         y[train_indices:]
-      )
-   ```
+2. **Encoding Data**, melakukan penyandian (_encoding_) fitur **'user_id'** dan **book_id** ke bentuk indeks integer agar dapat diinterpretasikan oleh algoritma machine learning.
+
+3. **Membagi Dataset**, dataset akan dibagi menjadi data train dan data test dengan rasio 80:20. Namun sebelum itu dilakukan pengacakan dataset agar distribusinya random/acak. Teknik _Encoding_ Data dan Membagi Dataset dilakukan untuk nantinya dipakai pada model _collaborative filtering_. Rasio 80:20 umumnya digunakan untuk memberikan data yang cukup untuk melatih model dan sekaligus menguji kinerjanya.
+
 
 ## Modeling
 
@@ -136,8 +139,20 @@ Kekurangan:
 
 **Top N Rekomendasi**
 Berikut adalah contoh hasil rekomendasi top 10 buku dari model untuk user dengan ID `15304`
-![topN](topN.png)
-> Gambar 1. Top N Rekomendasi
+| No  | Judul Buku                                                        | Author                              |
+|-----|-------------------------------------------------------------------|-------------------------------------|
+| 1   | A Briefer History of Time                                         | Stephen Hawking, Leonard Mlodinow   |
+| 2   | The Jane Austen Book Club                                         | Karen Joy Fowler                    |
+| 3   | A Room with a View                                                | E.M. Forster                        |
+| 4   | Moo, Baa, La La La!                                               | Sandra Boynton                      |
+| 5   | Raise High the Roof Beam, Carpenters & Seymour: An Introduction   | J.D. Salinger                       |
+| 6   | The Innocent Man: Murder and Injustice in a Small Town            | John Grisham                        |
+| 7   | Bleachers                                                         | John Grisham                        |
+| 8   | Predator (Kay Scarpetta, #14)                                     | Patricia Cornwell                   |
+| 9   | Another Roadside Attraction                                       | Tom Robbins                         |
+| 10  | Women in Love (Brangwen Family, #2)                               | D.H. Lawrence                       |
+
+> Table 1. Top N Rekomendasi
 
 ## Evaluation
 
@@ -165,8 +180,8 @@ Nilai RMSE rendah menunjukkan bahwa variasi nilai yang dihasilkan oleh suatu mod
 
 Visulaisasi evaluasi metrik menggunakan RMSE setelah pelatihan untuk model Collaborative filtering dapat dilihat pada Gambar 2.
 
-![rmse](rmse.png)
-> Gambar 2. Visualisasi Hasil RMSE
+![rmse](img/rmse.png)
+> Gambar 7. Visualisasi Hasil RMSE
 
 Dalam konteks evaluasi sistem rekomendasi, nilai _Root Mean Squared Error_ (RMSE) digunakan sebagai metrik utama. Berikut adalah interpretasi umum terhadap nilai RMSE:
 
@@ -196,9 +211,8 @@ Potensial untuk Peningkatan:
 - Sebelum menarik kesimpulan final, perlu juga mempertimbangkan relevansi nilai RMSE dengan konteks aplikasi dan kebutuhan pengguna. Sebuah nilai RMSE yang rendah mungkin tidak selalu menjamin kepuasan pengguna, sehingga pemahaman mendalam terhadap kebutuhan pengguna sangat penting dalam mengevaluasi kualitas rekomendasi.
 
 ## Referensi
-Alkaff, M., Khatimi, H., & Eriadi, A. (2020). Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering. MATRIK: Jurnal Manajemen, Teknik Informatika Dan Rekayasa Komputer, 20(1), 193-202.
-
-ZAYYAD, M. R. A. (2021). Sistem Rekomendasi Buku Menggunakan Metode Content Based Filtering.
-
-Arfisko, H. H., & Wibowo, A. T. (2022). Sistem Rekomendasi Film Menggunakan Metode Hybrid Collaborative Filtering Dan Content-Based Filtering. eProceedings of Engineering, 9(3).
+1. Alkaff, M., Khatimi, H., & Eriadi, A. (2020). Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering. MATRIK: Jurnal Manajemen, Teknik Informatika Dan Rekayasa Komputer, 20(1), 193-202.
+2. Irfan, M., & Cahyani, A. D. (2014). Sistem Rekomendasi: Buku Online Dengan Metode Collaborative Filtering. Jurnal Teknologi Technoscientia, 076-84.
+3. ZAYYAD, M. R. A. (2021). Sistem Rekomendasi Buku Menggunakan Metode Content Based Filtering.
+4. Arfisko, H. H., & Wibowo, A. T. (2022). Sistem Rekomendasi Film Menggunakan Metode Hybrid Collaborative Filtering Dan Content-Based Filtering. eProceedings of Engineering, 9(3).
 
