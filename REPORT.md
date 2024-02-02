@@ -1,14 +1,29 @@
 # Laporan Proyek Machine Learning - Sri Kresna Maha Dewa
 ## Project Overview
 
-Membaca buku adalah cara yang efektif bagi setiap individu untuk memperoleh pengetahuan dan wawasan baru mengenai berbagai topik. Buku berperan sebagai sumber informasi dan pengetahuan yang dapat memperluas pemahaman tentang berbagai aspek kehidupan. Pepatah "Buku adalah jendela dunia" mencerminkan pentingnya membaca. Meskipun informasi mengenai berbagai jenis buku kini mudah diakses melalui internet, minat baca di Indonesia masih rendah, kemungkinan disebabkan oleh banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka.
+Membaca buku tetap menjadi salah satu cara paling efektif bagi individu untuk memperluas pengetahuan dan wawasan mereka terhadap berbagai topik. Meskipun kita hidup dalam era di mana informasi mudah diakses melalui internet, minat baca di Indonesia masih rendah, mungkin karena banyaknya pilihan buku yang membuat pembaca kesulitan menemukan yang sesuai dengan preferensi mereka.
 
-Sebagai upaya meningkatkan minat baca masyarakat, salah satu solusinya adalah membangun sistem rekomendasi buku. Sistem ini menggunakan metode _Collaborative Filtering_ untuk membantu pembaca menemukan buku sesuai dengan kriteria dan preferensi mereka. Dengan adanya rekomendasi yang akurat, diharapkan pembaca dapat dengan mudah menemukan informasi yang mereka cari atau menemukan buku dengan kriteria serupa, sehingga minat baca masyarakat dapat meningkat.
+Dalam upaya meningkatkan minat baca masyarakat, proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku yang lebih canggih. Metode utama yang akan digunakan adalah _Collaborative Filtering_, sebuah pendekatan yang mengintegrasikan sumber daya dan penelitian terkini dalam pengembangan sistem rekomendasi.
+
+Melalui pendekatan ini, diharapkan pembaca dapat dengan mudah menemukan buku yang sesuai dengan kriteria dan preferensi mereka. Sistem akan menggunakan data kolaboratif dari sejumlah besar pembaca untuk merekomendasikan buku yang mungkin belum dikenal tetapi sesuai dengan selera mereka.
+
+Dengan meningkatnya akurasi rekomendasi, diharapkan bahwa masyarakat akan lebih tertarik untuk menjelajahi berbagai jenis buku dan dengan demikian, minat baca secara keseluruhan dapat ditingkatkan. Dengan mengintegrasikan sumber daya dan penelitian terkini, proyek ini tidak hanya bertujuan memenuhi kebutuhan pembaca saat ini tetapi juga berupaya membuka jendela baru ke dunia literasi yang lebih luas.
+
 ## Business Understanding
 
 Penelitian ini bertujuan menyusun sistem rekomendasi buku yang secara tepat memenuhi kriteria dan preferensi setiap pembaca. Dengan menerapkan metode _collaborative filtering_, sistem ini dirancang untuk memberikan rekomendasi yang sangat personal dan relevan. Data pembaca, termasuk preferensi, kriteria, dan histori bacaan, akan dianalisis untuk memahami dengan lebih baik pola bacaan dan keinginan pembaca. Dengan memadukan pendekatan _user-based_ dan _item-based_, serta memasukkan elemen _context-aware_, diharapkan sistem ini mampu menghasilkan rekomendasi buku yang tidak hanya sesuai dengan selera pembaca, tetapi juga mempertimbangkan konteks spesifik, seperti waktu dan lokasi.
 
 Melalui pengembangan sistem rekomendasi ini, diharapkan dapat meningkatkan minat baca masyarakat. Dengan memberikan rekomendasi yang akurat dan relevan, diharapkan pembaca akan lebih terlibat dalam eksplorasi literatur, memperluas wawasan mereka, dan pada akhirnya, mendorong peningkatan minat baca di kalangan masyarakat.
+
+**Analisis Dampak Potensial Sistem Rekomendasi Buku terhadap Budaya Membaca Masyarakat**
+- Personalisasi dan Relevansi:
+Dampak Positif: Sistem rekomendasi yang memahami secara mendalam preferensi dan keinginan pembaca akan meningkatkan pengalaman membaca personal. Pembaca akan lebih mungkin menemukan buku-buku yang sesuai dengan minat mereka, meningkatkan kepuasan dan keterlibatan dalam proses membaca.
+
+- Analisis Pola Bacaan dan Preferensi:
+Dampak Positif: Melalui analisis data pembaca, sistem dapat membaca pola bacaan dan preferensi, menghasilkan rekomendasi yang lebih akurat. Ini tidak hanya meningkatkan kemungkinan pembaca menemukan buku yang mereka sukai, tetapi juga membantu mereka menjelajahi genre atau penulis baru yang mungkin sebelumnya tidak terpikirkan.
+
+- Eksplorasi Literatur yang Lebih Luas:
+Dampak Positif: Pembaca yang menerima rekomendasi yang tepat cenderung lebih terbuka untuk mengeksplorasi buku-buku baru. Hal ini dapat memperluas wawasan pembaca, membuka pintu untuk genre atau penulis yang sebelumnya kurang diakses, dan pada akhirnya meningkatkan budaya membaca yang inklusif.
 
 ### Problem Statements
 
@@ -62,10 +77,13 @@ Dataset yang digunakan diambil dari situs **Kaggle** yang berjudul [_"goodbooks-
       
 File yang digunakan untuk pemodelan adalah file 'books.csv' dan 'ratings.csv' dengan menggunakan variabel **'user_id', 'book_id', 'authors', 'original_title'** dengan model _collaborative filtering_.
 
+**Penggunaan Atribut untuk Pemodelan:**
+- user_id dan book_id: Untuk mengidentifikasi hubungan antara pengguna dan buku.
+- authors dan original_title: Informasi tentang buku yang akan digunakan dalam pembuatan rekomendasi.
 
 ## Data Preparation
 Teknik yang digunakan untuk data preparation antara lain sebagai berikut:
-1. **Mengatasi Missing Value**, dilakukan pengecekan data apakah ada data yang kosong dan berapa jumlahnya menggunakan `isnull().sum()`, sehingga didapatkan hasil:
+1. **Mengatasi Missing Value**, Data yang hilang dapat menyebabkan ketidakakuratan dan ketidakseimbangan dalam model. Oleh karena itu, penting untuk menangani nilai yang hilang agar model dapat memberikan hasil yang dapat diandalkan. Ini dilakukan dengan pengecekan data apakah ada data yang kosong dan berapa jumlahnya menggunakan `isnull().sum()`, sehingga didapatkan hasil:
    ```sh
      book_id                             0
      user_id                             0
@@ -75,8 +93,32 @@ Teknik yang digunakan untuk data preparation antara lain sebagai berikut:
      original_publication_year    88870317
      dtype: int64
    ```
-2. **Encoding Data**, melakukan penyandian (_encoding_) fitur **'user_id'** dan **book_id** ke bentuk indeks integer.
-3. **Membagi Dataset**, dataset akan dibagi menjadi data train dan data test dengan rasio 80:20. Namun sebelum itu dilakukan pengacakan dataset agar distribusinya random/acak. Teknik _Encoding_ Data dan Membagi Dataset dilakukan untuk nantinya dipakai pada model _collaborative filtering_.
+   Kemudian dihapus menggunakan `.dropna()`
+   ```sh
+      df.dropna()
+   ```
+2. **Encoding Data**, melakukan penyandian (_encoding_) fitur **'user_id'** dan **book_id** ke bentuk indeks integer agar dapat diinterpretasikan oleh algoritma machine learning.
+   ```sh
+      id_user = dr['user_id'].unique().tolist()
+      user_to_user_encoded = {x: i for i, x in enumerate(id_user)}
+      user_encoded_to_user = {i: x for i, x in enumerate(id_user)}
+      id_buku = dr['book_id'].unique().tolist()
+      buku_to_buku_encoded = {x: i for i, x in enumerate(id_buku)}
+      buku_encoded_to_buku = {i: x for i, x in enumerate(id_buku)}
+   ```
+3. **Membagi Dataset**, dataset akan dibagi menjadi data train dan data test dengan rasio 80:20. Namun sebelum itu dilakukan pengacakan dataset agar distribusinya random/acak. Teknik _Encoding_ Data dan Membagi Dataset dilakukan untuk nantinya dipakai pada model _collaborative filtering_. Rasio 80:20 umumnya digunakan untuk memberikan data yang cukup untuk melatih model dan sekaligus menguji kinerjanya.
+   ```sh
+      x = dr[['user_id', 'book_id']].values
+      y = dr['rating'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
+
+      train_indices = int(0.8 * dr.shape[0])
+      x_train, x_val, y_train, y_val = (
+         x[:train_indices],
+         x[train_indices:],
+         y[:train_indices],
+         y[train_indices:]
+      )
+   ```
 
 ## Modeling
 
@@ -91,6 +133,11 @@ Kelebihan:
 Kekurangan:
 - Cold-start problem: Algoritma menghadapi kesulitan dalam memberikan rekomendasi untuk pengguna atau item baru yang belum memiliki informasi preferensi terdokumentasi.
 - Sparse problem: Keterbatasan dalam keakuratan algoritma dapat muncul ketika terdapat matriks _rating_ pengguna-item yang bersifat _sparse_, yaitu ketika terdapat banyak nilai kosong atau jarang diisi, mempengaruhi kemampuan model untuk memberikan rekomendasi yang tepat.
+
+**Top N Rekomendasi**
+Berikut adalah contoh hasil rekomendasi top 10 buku dari model untuk user dengan ID `15304`
+![topN](topN.png)
+> Gambar 1. Top N Rekomendasi
 
 ## Evaluation
 
@@ -118,13 +165,26 @@ Nilai RMSE rendah menunjukkan bahwa variasi nilai yang dihasilkan oleh suatu mod
 
 Visulaisasi evaluasi metrik menggunakan RMSE setelah pelatihan untuk model Collaborative filtering dapat dilihat pada Gambar 2.
 
-![rmse](img.png)
-> Gambar 1. Visualisasi Hasil RMSE
+![rmse](rmse.png)
+> Gambar 2. Visualisasi Hasil RMSE
 
- Dari visualisasi diatas didapatkan nilai error akhir sebesar 0.3527 dan validasi error sebesar 0.5760 yang bisa dikatakan sudah bagus untuk sebuah sistem rekomendasi. 
+Dalam konteks evaluasi sistem rekomendasi, nilai _Root Mean Squared Error_ (RMSE) digunakan sebagai metrik utama. Berikut adalah interpretasi umum terhadap nilai RMSE:
+
+- RMSE = 0:
+   - Model memberikan prediksi yang sempurna dan tidak ada kesalahan prediksi. Namun, ini sangat jarang terjadi dalam praktik.
+- 0 < RMSE < 0.3:
+   - Model memiliki kinerja yang sangat baik. Prediksi sangat dekat dengan nilai observasi, dan kesalahan prediksi sangat kecil.
+- 0.3 ≤ RMSE < 0.5:
+   - Model memiliki kinerja yang baik. Prediksi memiliki tingkat akurasi yang tinggi, meskipun ada beberapa variasi antara nilai prediksi dan observasi.
+- 0.5 ≤ RMSE < 1:
+   - Model memberikan prediksi yang dapat diterima dengan tingkat akurasi yang moderat. Meskipun ada variasi, prediksi masih memberikan informasi yang berguna.
+- RMSE ≥ 1:
+   - Model memiliki kinerja yang kurang memuaskan. Kesalahan prediksi relatif besar dan dapat mempengaruhi nilai kegunaan sistem rekomendasi.
+
+Nilai RMSE sebesar  0.3164 dan validasi error sebesar 0.3137. Dengan mengacu pada interpretasi di atas, sistem rekomendasi dapat dianggap baik karena nilai RMSE berada dalam rentang 0.3 hingga 0.5. Ini menunjukkan bahwa prediksi sistem memiliki tingkat akurasi yang tinggi dan dekat dengan nilai observasi. Meskipun ada beberapa variasi, sistem tetap memberikan rekomendasi yang baik kepada pengguna. 
 
 ## Kesimpulan
-- Model _collaborative filtering_ dievaluasi menggunakan metode _Root Mean Square Error_ (RMSE) untuk mengukur sejauh mana perbedaan antara prediksi model dengan nilai aktual. Nilai RMSE yang dihasilkan sebesar 0.5760 mencerminkan tingkat akurasi model dalam memberikan rekomendasi. Semakin rendah nilai RMSE, semakin baik kinerja model dalam memprediksi preferensi pengguna.
+- Model _collaborative filtering_ dievaluasi menggunakan metode _Root Mean Square Error_ (RMSE) untuk mengukur sejauh mana perbedaan antara prediksi model dengan nilai aktual. Nilai RMSE yang dihasilkan sebesar 0.3137 mencerminkan tingkat akurasi model dalam memberikan rekomendasi. Semakin rendah nilai RMSE, semakin baik kinerja model dalam memprediksi preferensi pengguna.
 
 - Dengan nilai RMSE yang relatif rendah, dapat disimpulkan bahwa model _collaborative filtering_ ini memiliki tingkat ketepatan yang baik dalam memprediksi kecocokan antara pembaca (_user_) dan buku. Hal ini menunjukkan bahwa rekomendasi yang dihasilkan oleh model cenderung mendekati preferensi sebenarnya dari pengguna.
 Potensial untuk Peningkatan:
